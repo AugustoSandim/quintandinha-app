@@ -19,20 +19,21 @@ const Product: React.FC = () => {
   useEffect(() => {}, [data]);
 
   const getProducts = () => {
-    console.warn('!!!!!!!!!!!DELETED ALL!!!!!!!!!!');
     return AsyncStorage.getItem('products');
   };
 
   const handleDelete = async () => {
-    AsyncStorage.removeItem('products');
+    console.warn('!!!!!!!!!!!DELETED ALL!!!!!!!!!!');
+    return AsyncStorage.removeItem('products');
   };
 
   const handleSubmit = async () => {
     const all = getProducts();
     all.then((products: any) => {
-      console.log('---', JSON.parse(products));
-      // const allProducts = JSON.parse(getProducts()) || [];
-      const ALL_PRODUCTS = JSON.parse(products) || [{id: uuidv4(), ...data}];
+      const ALL_PRODUCTS = JSON.parse(products) || [];
+      ALL_PRODUCTS.push({id: uuidv4(), ...data});
+
+      console.log('---CAP', ALL_PRODUCTS);
       AsyncStorage.setItem('products', JSON.stringify(ALL_PRODUCTS));
     });
 
